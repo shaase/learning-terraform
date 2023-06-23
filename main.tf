@@ -33,6 +33,20 @@ resource "aws_instance" "blog" {
 
 resource "aws_s3_bucket" "tf-course" {
   bucket = "haase-terraform-20230623"
+}
+
+resource "aws_s3_bucket_ownership_controls" "tf-course" {
+  bucket = data.aws_s3_bucket.tf-course.id
+
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_acl" "tf-course" {
+  depends_on = [data.aws_s3_bucket_ownership_controls.tf-course]
+
+  bucket = data.aws_s3_bucket.tf-course.id
   acl    = "private"
 }
 
