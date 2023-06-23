@@ -36,7 +36,7 @@ resource "aws_s3_bucket" "tf-course" {
 }
 
 resource "aws_s3_bucket_ownership_controls" "tf-course" {
-  bucket = data.aws_s3_bucket.tf-course.id
+  bucket = aws_s3_bucket.tf-course.id
 
   rule {
     object_ownership = "BucketOwnerPreferred"
@@ -44,9 +44,9 @@ resource "aws_s3_bucket_ownership_controls" "tf-course" {
 }
 
 resource "aws_s3_bucket_acl" "tf-course" {
-  depends_on = [data.aws_s3_bucket_ownership_controls.tf-course]
+  depends_on = [aws_s3_bucket_ownership_controls.tf-course]
 
-  bucket = data.aws_s3_bucket.tf-course.id
+  bucket = aws_s3_bucket.tf-course.id
   acl    = "private"
 }
 
