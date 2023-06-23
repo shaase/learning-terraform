@@ -29,9 +29,7 @@ module "blog_vpc" {
   }
 }
 
-
-
-module "autoscaling" {
+module "blog_autoscaling" {
   source   = "terraform-aws-modules/autoscaling/aws"
   version  = "6.10.0"
   
@@ -45,25 +43,6 @@ module "autoscaling" {
 
   image_id           = data.aws_ami.app_ami.id
   instance_type = var.instance_type
-}
-
-resource "aws_s3_bucket" "tf-course" {
-  bucket = "haase-terraform-20230623"
-}
-
-resource "aws_s3_bucket_ownership_controls" "tf-course" {
-  bucket = aws_s3_bucket.tf-course.id
-
-  rule {
-    object_ownership = "BucketOwnerPreferred"
-  }
-}
-
-resource "aws_s3_bucket_acl" "tf-course" {
-  depends_on = [aws_s3_bucket_ownership_controls.tf-course]
-
-  bucket = aws_s3_bucket.tf-course.id
-  acl    = "private"
 }
 
 module "blog_alb" {
@@ -112,3 +91,4 @@ module "blog_sg" {
   egress_rules       = ["all-all"]
   egress_cidr_blocks = ["0.0.0.0/0"]
 }
+
