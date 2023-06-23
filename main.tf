@@ -23,7 +23,7 @@ resource "aws_instance" "blog" {
   instance_type = var.instance_type
 
   vpc_security_group_ids = [
-    module.blog_sg.security_group_id
+    module.security_group_id
   ]
 
   tags = {
@@ -50,10 +50,10 @@ resource "aws_s3_bucket_acl" "tf-course" {
   acl    = "private"
 }
 
-module "security-group" "blog_sg" {
+module "security-group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "5.1.0"
-  # name    = "blog_new"
+  name    = "blog_new"
 
   vpc_id = data.aws_vpc.default.id
 
