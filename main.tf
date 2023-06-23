@@ -50,10 +50,10 @@ resource "aws_s3_bucket_acl" "tf-course" {
   acl    = "private"
 }
 
-module "security-group" "blog_sg" {
+module "security-group" {
   source  = "terraform-aws-modules/security-group/aws"
   version = "5.1.0"
-  name    = "blog_new"
+  name    = "blog_sg"
 
   vpc_id = data.aws_vpc.default.id
 
