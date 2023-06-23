@@ -23,7 +23,7 @@ resource "aws_instance" "blog" {
   instance_type = var.instance_type
 
   vpc_security_group_ids = [
-    module.security_group_id
+    module.security-group.security_group_id
   ]
 
   tags = {
